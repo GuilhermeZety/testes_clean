@@ -8,7 +8,7 @@ import 'package:testes_clean/modules/home/home_module.dart';
 class AppModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind.singleton<RequestService>((i) => DioRequestService()),
+        Bind.singleton<RequestService>((i) => DioRequestService(connectionService: i.get())),
         Bind.singleton<ConnectionService>((i) => PingConnectionService()),
       ];
 

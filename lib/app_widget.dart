@@ -13,7 +13,6 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
-    // Modular.setObservers([BotToastNavigatorObserver()]);
 
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(

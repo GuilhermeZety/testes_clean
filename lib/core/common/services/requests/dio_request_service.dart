@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:testes_clean/core/common/services/connection/connection_service.dart';
 import 'package:testes_clean/core/common/services/requests/errors/not_internet_connection_exception.dart';
 import 'package:testes_clean/core/common/services/requests/request_result.dart';
@@ -7,7 +6,8 @@ import 'package:testes_clean/core/common/services/requests/request_service.dart'
 
 class DioRequestService extends RequestService {
   final Dio _dio;
-  DioRequestService({Dio? dio}) : _dio = dio ?? Dio();
+  final ConnectionService connectionService;
+  DioRequestService({required this.connectionService, Dio? dio}) : _dio = dio ?? Dio();
 
   @override
   Future<RequestResult> get(String url, {Map<String, dynamic>? headers}) async {
@@ -16,8 +16,7 @@ class DioRequestService extends RequestService {
         throw NotInternetConnectionException();
       }
       var response = await _dio.get(url, options: Options(headers: headers));
-      if ((response.statusCode ?? 404) >= 200 &&
-          (response.statusCode ?? 404) < 300) {
+      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
         return RequestResult(
           statusCode: response.statusCode ?? 0,
           data: response.data,
@@ -42,10 +41,8 @@ class DioRequestService extends RequestService {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      var response =
-          await _dio.post(url, data: body, options: Options(headers: headers));
-      if ((response.statusCode ?? 404) >= 200 &&
-          (response.statusCode ?? 404) < 300) {
+      var response = await _dio.post(url, data: body, options: Options(headers: headers));
+      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
         return RequestResult(
           statusCode: response.statusCode ?? 0,
           data: response.data,
@@ -70,10 +67,8 @@ class DioRequestService extends RequestService {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      var response =
-          await _dio.put(url, data: body, options: Options(headers: headers));
-      if ((response.statusCode ?? 404) >= 200 &&
-          (response.statusCode ?? 404) < 300) {
+      var response = await _dio.put(url, data: body, options: Options(headers: headers));
+      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
         return RequestResult(
           statusCode: response.statusCode ?? 0,
           data: response.data,
@@ -98,10 +93,8 @@ class DioRequestService extends RequestService {
       if (!(await _isConnected)) {
         throw NotInternetConnectionException();
       }
-      var response =
-          await _dio.patch(url, data: body, options: Options(headers: headers));
-      if ((response.statusCode ?? 404) >= 200 &&
-          (response.statusCode ?? 404) < 300) {
+      var response = await _dio.patch(url, data: body, options: Options(headers: headers));
+      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
         return RequestResult(
           statusCode: response.statusCode ?? 0,
           data: response.data,
@@ -131,8 +124,7 @@ class DioRequestService extends RequestService {
         data: body,
         options: Options(headers: headers),
       );
-      if ((response.statusCode ?? 404) >= 200 &&
-          (response.statusCode ?? 404) < 300) {
+      if ((response.statusCode ?? 404) >= 200 && (response.statusCode ?? 404) < 300) {
         return RequestResult(
           statusCode: response.statusCode ?? 0,
           data: response.data,
@@ -147,6 +139,5 @@ class DioRequestService extends RequestService {
     }
   }
 
-  Future<bool> get _isConnected async =>
-      await Modular.get<ConnectionService>().isConnected;
+  Future<bool> get _isConnected async => await connectionService.isConnected;
 }

@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey.shade100,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _cubit.getTrivia(),
-        child: Icon(Icons.refresh), 
+        child: Icon(Icons.refresh),
       ),
       body: BlocConsumer<HomeCubit, HomeState>(
         bloc: _cubit,

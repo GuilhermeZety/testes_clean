@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:testes_clean/core/shared/trivia/data/models/trivia_model.dart';
-import 'package:testes_clean/modules/home/presentation/services/home_service.dart';
+import 'package:testes_clean/modules/home/services/home_service.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'home_state.dart';
@@ -12,7 +12,8 @@ class HomeCubit extends Cubit<HomeState> {
   void getTrivia() async {
     try {
       emit(HomeLoadingState());
-      var trivia = await service.getTrivia(true);
+
+      var trivia = await service.getTrivia(false);
 
       if (trivia != null) {
         return emit(HomeTriviaState(trivia: trivia));
